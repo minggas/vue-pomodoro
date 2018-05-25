@@ -38,9 +38,9 @@ Vue.component('container', {
     `,
     data: function () {
         return {
-            wk_minutes: 1,
-            sb_minutes: 2,
-            lb_minutes: 3,
+            wk_minutes: 25,
+            sb_minutes: 5,
+            lb_minutes: 15,
             minutes: 0,
             seconds: 0,
             interval: null,
@@ -62,7 +62,7 @@ Vue.component('container', {
             this.paused = false;
             this.fillerIncrement = 200 / (this.minutes * 60);
             this.fillerHeight = 0;
-            this.interval = setInterval(this.intervalCallback, 20);
+            this.interval = setInterval(this.intervalCallback, 1000);
         },
         startWork: function () {
             if(this.workCounter >= 4){
@@ -80,7 +80,7 @@ Vue.component('container', {
                 this.paused = true;
                 this.pauseBtn = 'Resume';
             } else {
-                this.interval = setInterval(this.intervalCallback, 50);
+                this.interval = setInterval(this.intervalCallback, 1000);
                 this.paused = false;
                 this.pauseBtn = 'Pause';
             }
