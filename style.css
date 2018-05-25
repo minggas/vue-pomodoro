@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*:focus {
+  outline:none;
+}
+
+main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  border: 1px solid #333;
+  border-radius: 20px;
+  width: 400px;
+  padding: 20px;
+  text-align: center;
+  background: #333;
+}
+
+.counter{
+  font-size: 1.3rem;
+  color: #ddffcc;
+  margin-bottom: 20px;
+}
+.setter{
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-evenly;  
+}
+
+.setter button {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  padding: 0 10px;
+  color: #ddffcc;
+  cursor: pointer;
+}
+
+.timer {
+  color: #f00;
+  font-size: 50px;
+  margin: 10px auto;
+  border: 5px solid red;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+.time {
+  margin-top: 70px;
+  z-index: 1;
+  position: relative;
+}
+
+.filler {
+  background: #ddffcc;
+  height: 0px;
+  width: 200px;
+  position: absolute;
+  bottom: 0;
+}
+
+.buttons button {
+  background: #4da6ff;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 5px;
+  width: 90px;
+  margin: 10px auto;
+  font-size: 14px;
+  height: 50px;
+  border-radius: 50px;
+  margin: 0 10px;
+}
+
+.buttons button.stop {
+  background: #f00;
+}
