@@ -31,8 +31,8 @@ Vue.component('container', {
     </div>
     <p class="counter">Pomodoros: {{ workCounter }}</p>
     <div class="buttons">
-        <button class="start" v-on:click="startWork">Start</button>
-        <button class="stop" v-on:click="stopTimer" v-bind:style="btnColor">{{ pauseBtn }}</button>
+        <button class="start" v-on:click="startWork" v-bind:style="startBtn">{{startBtn.name}}</button>
+        <button class="stop" v-on:click="stopTimer" v-bind:style="pauseBtn">{{ pauseBtn.name }}</button>
     </div>
 </div>
     `,
@@ -50,9 +50,13 @@ Vue.component('container', {
             fillerIncrement: 0,
             workCounter: 0,
             isWork: true,
-            pauseBtn: 'Pause',
-            btnColor: {
+            pauseBtn: {
+                name: 'Pause',
                 backgroundColor: '#FDE74C'
+            },
+            startBtn: {
+                name: 'Start',
+                backgroundColor: '#9BC53D'
             }
         };
     },
@@ -68,13 +72,19 @@ Vue.component('container', {
         },
         startWork: function () {
             if(this.started){
-                return;
-            }
+                this.startBtn.backgroundColor = '#9BC53D';
+                this.startBtn.name = 'Start';
+                this.workCounter = 0;
+                this.resetTimer();
+            }else{
+                this.startBtn.backgroundColor = '#ff2030';
+                this.startBtn.name = 'Reset'; 
             if (this.workCounter >= 4) {
                 this.resetVariables(this.lb_minutes, 0, true);
             } else {
                 this.resetVariables(this[this.isWork ? 'wk_minutes' : 'sb_minutes'], 0, true);
             }
+            }            
         },
         stopTimer: function () {
             if (!this.started) {
@@ -83,13 +93,13 @@ Vue.component('container', {
             if (!this.paused) {
                 clearInterval(this.interval);
                 this.paused = true;
-                this.pauseBtn = 'Resume';
-                this.btnColor.backgroundColor = '#5BC0EB';
+                this.pauseBtn.name = 'Resume';
+                this.pauseBtn.backgroundColor = '#5BC0EB';
             } else {
                 this.interval = setInterval(this.intervalCallback, 1000);
                 this.paused = false;
-                this.pauseBtn = 'Pause';
-                this.btnColor.backgroundColor = '#FDE74C';
+                this.pauseBtn.name = 'Pause';
+                this.pauseBtn.backgroundColor = '#FDE74C';
             }
         },
         playSound: function () {
@@ -108,6 +118,7 @@ Vue.component('container', {
             ++this[e.target.dataset.name + '_minutes'];
         },
         intervalCallback: function () {
+            console.log('test');
             if (this.started) {
                 if (this.seconds == 0) {
                     if (this.minutes == 0) {
@@ -129,13 +140,17 @@ Vue.component('container', {
         },
         timerComplete: function () {            
             alert(this.isWork ? 'Time to rest' : 'Back to work');
-            clearInterval(this.interval);
-            this.started = false;
-            this.fillerHeight = 0;
-            this.paused = true;
+            this.resetTimer();
             if (this.workCounter >= 4) {
                 this.workCounter = 0;
             }
+        },
+        resetTimer: function () {
+            clearInterval(this.interval);
+            this.seconds = 0;
+            this.started = false;
+            this.fillerHeight = 0;
+            this.paused = true;
         }
     },
     computed: {
