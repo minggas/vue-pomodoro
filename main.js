@@ -67,6 +67,9 @@ Vue.component('container', {
             this.interval = setInterval(this.intervalCallback, 1000);
         },
         startWork: function () {
+            if(this.started){
+                return;
+            }
             if (this.workCounter >= 4) {
                 this.resetVariables(this.lb_minutes, 0, true);
             } else {
