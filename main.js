@@ -118,7 +118,6 @@ Vue.component('container', {
             ++this[e.target.dataset.name + '_minutes'];
         },
         intervalCallback: function () {
-            console.log('test');
             if (this.started) {
                 if (this.seconds == 0) {
                     if (this.minutes == 0) {
