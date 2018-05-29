@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Esteban|Montserrat:700');
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Esteban', serif;
 }
 
 *:focus {
@@ -14,42 +16,48 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  background: #FFF7F8;
+  color: hsla(0, 0%, 0%,0.8);
+}
+.title {
+  margin-bottom: 20px;
+  font-size: calc(2rem + 5vw);
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
 }
 
 .container {
-  border: 1px solid #333;
   border-radius: 20px;
-  width: 400px;
+  min-width: 300px;
+  max-width: 400px;
   padding: 20px;
   text-align: center;
-  background: #333;
+  background: hsla(9, 100%, 64%, 0.8);
 }
 
 .counter{
-  font-size: 1.3rem;
-  color: #ddffcc;
+  font-size: calc(1rem + 1vw);
   margin-bottom: 20px;
 }
 .setter{
-  padding: 10px 20px;
+  padding: 10px;
   display: flex;
   justify-content: space-evenly;  
 }
 
 .setter button {
   background: transparent;
-  border: none;
-  font-size: 1.5rem;
-  padding: 0 10px;
-  color: #ddffcc;
+  font-size: calc(1rem + 0.5vw);
+  padding: 0 0.5rem;
   cursor: pointer;
+  border: none;
 }
 
 .timer {
-  color: #f00;
   font-size: 50px;
   margin: 10px auto;
-  border: 5px solid red;
+  border: 5px solid hsla(0, 0%, 0%,0.7);
   border-radius: 50%;
   width: 200px;
   height: 200px;
@@ -77,19 +85,14 @@ main {
 }
 
 .buttons button {
-  background: #4da6ff;
-  border: none;
-  color: #fff;
+  background: #9BC53D;
+  border: none; 
   cursor: pointer;
   padding: 5px;
   width: 90px;
-  margin: 10px auto;
-  font-size: 14px;
+  margin: 10px;
+  font-size: 1.3rem;
   height: 50px;
-  border-radius: 50px;
-  margin: 0 10px;
-}
-
-.buttons button.stop {
-  background: #f00;
+  border-radius: 10px;
+    
 }
