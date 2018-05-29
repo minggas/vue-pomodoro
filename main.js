@@ -32,7 +32,7 @@ Vue.component('container', {
     <p class="counter">Pomodoros: {{ workCounter }}</p>
     <div class="buttons">
         <button class="start" v-on:click="startWork">Start</button>
-        <button class="stop" v-on:click="stopTimer">{{ pauseBtn }}</button>
+        <button class="stop" v-on:click="stopTimer" v-bind:style="btnColor">{{ pauseBtn }}</button>
     </div>
 </div>
     `,
@@ -50,12 +50,14 @@ Vue.component('container', {
             fillerIncrement: 0,
             workCounter: 0,
             isWork: true,
-            pauseBtn: 'Pause'
+            pauseBtn: 'Pause',
+            btnColor: {
+                backgroundColor: '#FDE74C'
+            }
         };
     },
     methods: {
         resetVariables: function (mins, secs, started) {
-            console.log(this);
             this.minutes = mins;
             this.seconds = secs;
             this.started = started;
@@ -65,39 +67,50 @@ Vue.component('container', {
             this.interval = setInterval(this.intervalCallback, 1000);
         },
         startWork: function () {
-            if(this.workCounter >= 4){
-                this.resetVariables(this.lb_minutes, 0, true);                
-            }else{
-                this.resetVariables(this[this.isWork ?'wk_minutes':'sb_minutes'], 0, true);
-            }            
+            if (this.workCounter >= 4) {
+                this.resetVariables(this.lb_minutes, 0, true);
+            } else {
+                this.resetVariables(this[this.isWork ? 'wk_minutes' : 'sb_minutes'], 0, true);
+            }
         },
         stopTimer: function () {
-            if(!this.started){
+            if (!this.started) {
                 return;
             }
             if (!this.paused) {
                 clearInterval(this.interval);
                 this.paused = true;
                 this.pauseBtn = 'Resume';
+                this.btnColor.backgroundColor = '#5BC0EB';
             } else {
                 this.interval = setInterval(this.intervalCallback, 1000);
                 this.paused = false;
                 this.pauseBtn = 'Pause';
+                this.btnColor.backgroundColor = '#FDE74C';
             }
         },
+        playSound: function () {
+            const audio = document.querySelector('audio');
+            if (!audio) return;
+            audio.currentTime = 0;
+            audio.play();
+            
+        },
         minusTime: function (e) {
-            --this[e.target.dataset.name + '_minutes'];
+            if(this[e.target.dataset.name + '_minutes'] > 1){
+                --this[e.target.dataset.name + '_minutes'];
+            }            
         },
         plusTime: function (e) {
             ++this[e.target.dataset.name + '_minutes'];
         },
         intervalCallback: function () {
-            console.log('teste');
             if (this.started) {
                 if (this.seconds == 0) {
                     if (this.minutes == 0) {
-                        this.timerComplete();
-                        if(this.isWork){
+                        this.playSound(); 
+                        this.timerComplete();                       
+                        if (this.isWork) {
                             ++this.workCounter;
                         }
                         this.isWork = !this.isWork;
@@ -111,13 +124,13 @@ Vue.component('container', {
                 this.fillerHeight = this.fillerHeight + this.fillerIncrement;
             }
         },
-        timerComplete: function () {
-            alert(this.isWork?'Time to rest':'Back to work');
+        timerComplete: function () {            
+            alert(this.isWork ? 'Time to rest' : 'Back to work');
             clearInterval(this.interval);
             this.started = false;
             this.fillerHeight = 0;
             this.paused = true;
-            if(this.workCounter >= 4){
+            if (this.workCounter >= 4) {
                 this.workCounter = 0;
             }
         }
@@ -133,14 +146,13 @@ Vue.component('container', {
             if (!this.started) {
                 if (this.isWork) {
                     this.minutes = this.wk_minutes;
-                } else{
-                    if(this.workCounter >= 4){
-                        this.minutes = this.lb_minutes;                    
+                } else {
+                    if (this.workCounter >= 4) {
+                        this.minutes = this.lb_minutes;
                     } else {
                         this.minutes = this.sb_minutes;
                     }
                 }
-                 
             }
             if (this.minutes < 10) {
                 return "0" + parseInt(this.minutes, 10);
