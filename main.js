@@ -68,7 +68,7 @@ Vue.component('container', {
             this.paused = false;
             this.fillerIncrement = 200 / (this.minutes * 60);
             this.fillerHeight = 0;
-            this.interval = setInterval(this.intervalCallback, 1000);
+            this.interval = setInterval(this.intervalCallback, 10);
         },
         startWork: function () {
             if(this.started){
@@ -107,7 +107,7 @@ Vue.component('container', {
             if (!audio) return;
             audio.currentTime = 0;
             audio.play();
-            
+            this.timerComplete();
         },
         minusTime: function (e) {
             if(this[e.target.dataset.name + '_minutes'] > 1){
@@ -121,8 +121,7 @@ Vue.component('container', {
             if (this.started) {
                 if (this.seconds == 0) {
                     if (this.minutes == 0) {
-                        this.playSound(); 
-                        this.timerComplete();                       
+                        this.playSound();                                                
                         if (this.isWork) {
                             ++this.workCounter;
                         }
@@ -143,6 +142,8 @@ Vue.component('container', {
             if (this.workCounter >= 4) {
                 this.workCounter = 0;
             }
+            this.startBtn.backgroundColor = '#9BC53D';
+            this.startBtn.name = 'Start';
         },
         resetTimer: function () {
             clearInterval(this.interval);
