@@ -68,7 +68,7 @@ Vue.component('container', {
             this.paused = false;
             this.fillerIncrement = 200 / (this.minutes * 60);
             this.fillerHeight = 0;
-            this.interval = setInterval(this.intervalCallback, 10);
+            this.interval = setInterval(this.intervalCallback, 1000);
         },
         startWork: function () {
             if(this.started){
